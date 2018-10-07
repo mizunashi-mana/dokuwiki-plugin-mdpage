@@ -2,6 +2,8 @@
 
 if(!defined('DOKU_INC')) die();
 
+require __DIR__.'/src/bootstrap.php';
+
 class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
 
     function getType() {

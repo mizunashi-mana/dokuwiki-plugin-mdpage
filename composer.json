@@ -5,6 +5,11 @@
     "require": {
         "cebe/markdown": "^1.2"
     },
+    "autoload": {
+        "psr-4": {
+            "Composer\\": "src/DokuWiki/Plugin/Mdpage"
+        }
+    },
     "license": "MIT",
     "authors": [
         {
