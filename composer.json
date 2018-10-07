@@ -7,7 +7,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Composer\\": "src/DokuWiki/Plugin/Mdpage"
+            "DokuWiki\\": "src/DokuWiki"
         }
     },
     "license": "MIT",
