@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  dokuwiki:
+    image: mizunashi/dokuwiki:latest
+    ports:
+        - "8080:80"
