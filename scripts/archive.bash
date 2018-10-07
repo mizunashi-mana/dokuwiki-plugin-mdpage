@@ -33,16 +33,7 @@ fi
 
 TARGET_DIR="$(dirname "$SCRIPT_DIR")"
 
-TARGET_FILES=$(cat <<EOS
-conf
-lang
-LICENSE
-plugin.info.txt
-syntax.php
-EOS
-)
-
 tar \
   -C $TARGET_DIR \
   -zcvf archive.tar.gz \
-  $TARGET_FILES
+  $(cat "$TARGET_DIR/.plugin_includes")
