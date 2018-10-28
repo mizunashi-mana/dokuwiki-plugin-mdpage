@@ -5,3 +5,8 @@ services:
     image: mizunashi/dokuwiki:latest
     ports:
         - "8080:80"
+    volumes:
+        - ".:/var/www/dokuwiki/lib/plugins/mdpage"
+    environment:
+        #- DEBUG=true
+        - DOKUWIKI_LANG=ja
