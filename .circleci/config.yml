@@ -10,11 +10,13 @@ jobs:
             - run: sudo composer self-update
 
             - run: make
+            - run: mkdir -p /tmp/artifacts
+            - run: cp archive.tar.gz plugin-package.tar.gz
 
             - persist_to_workspace:
                 root: /tmp/artifacts
                 paths:
-                    - archive.tar.gz
+                    - plugin-package.tar.gz
 
     test:
         docker:
