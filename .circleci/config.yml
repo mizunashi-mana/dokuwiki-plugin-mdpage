@@ -51,13 +51,14 @@ jobs:
             - run: go get github.com/tcnksm/ghr
 
             - run: |
-                VERSION="$(git tag)"
-                ghr
-                    -t ${GITHUB_TOKEN}
-                    -u ${CIRCLE_PROJECT_USERNAME}
-                    -r ${CIRCLE_PROJECT_REPONAME}
-                    -c ${CIRCLE_SHA1}
-                    -delete ${VERSION}
+                VERSION="${CIRCLE_TAG}"
+                ghr \
+                    -t ${GITHUB_TOKEN} \
+                    -u ${CIRCLE_PROJECT_USERNAME} \
+                    -r ${CIRCLE_PROJECT_REPONAME} \
+                    -c ${CIRCLE_SHA1} \
+                    -n "Release ${VERSION}" \
+                    "${VERSION}" \
                     /tmp/artifacts
 
 workflows:
