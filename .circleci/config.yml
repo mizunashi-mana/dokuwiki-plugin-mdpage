@@ -57,19 +57,23 @@ jobs:
                     ./archive.tar.gz
 
 workflows:
-  version: 2
-  main:
-    jobs:
-        - build:
-            filters:
-                branches:
-                    only: master
-        - test
-        - deploy:
-            requires:
-                - build
-            filters:
-                branches:
-                    ignore: /.*/
-                tags:
-                    only: /^v\d+\.\d+\.\d+$/
+    version: 2
+    test:
+        jobs:
+            - test
+    build-and-deploy:
+        jobs:
+            - build:
+                filters:
+                    branches:
+                        only: master
+                    tags:
+                        only: /.*/
+            - deploy:
+                requires:
+                    - build
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^v\d+\.\d+\.\d+$/
