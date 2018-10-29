@@ -1,3 +1,6 @@
 build:
-	composer install --no-dev --no-scripts --no-suggest
+	composer install \
+		--no-interaction \
+		--optimize-autoloader \
+		--no-dev --no-scripts --no-suggest
 	./scripts/archive.bash
