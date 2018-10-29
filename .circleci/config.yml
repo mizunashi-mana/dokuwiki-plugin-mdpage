@@ -1,0 +1,74 @@
+version: 2
+
+jobs:
+    build:
+        docker:
+            - image: circleci/php:7.1-node-browsers
+        steps:
+            - checkout
+
+            - run: sudo composer self-update
+
+            - run: make
+
+            - store_artifacts:
+                path: ./archive.tar.gz
+
+    test:
+        docker:
+            - image: circleci/php:7.1-node-browsers
+        steps:
+            - checkout
+
+            - run: sudo composer self-update
+
+            - restore_cache:
+                keys:
+                    - composer-v1-{{ checksum "composer.lock" }}
+                    # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+                    - composer-v1-
+            - run: composer install -n --prefer-dist
+            - save_cache:
+                key: composer-v1-{{ checksum "composer.lock" }}
+                paths:
+                    - vendor
+
+            - run: composer test
+
+    deploy:
+        docker:
+            - image: circleci/golang:1.8
+        - attach_workspace:
+            at: ./archive.tar.gz
+        steps:
+            - checkout
+
+            - run: go get github.com/tcnksm/ghr
+
+            - run: |
+                VERSION="$(git tag)"
+                ghr
+                    -t ${GITHUB_TOKEN}
+                    -u ${CIRCLE_PROJECT_USERNAME}
+                    -r ${CIRCLE_PROJECT_REPONAME}
+                    -c ${CIRCLE_SHA1}
+                    -delete ${VERSION}
+                    ./archive.tar.gz
+
+workflows:
+  version: 2
+  main:
+    jobs:
+        - build:
+            filters:
+                branches:
+                    only: master
+        - test
+        - deploy:
+            requires:
+                - build
+            filters:
+                branches:
+                    ignore: /.*/
+                tags:
+                    only: /^\d+\.\d+\.\d+$/
