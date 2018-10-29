@@ -38,9 +38,10 @@ jobs:
     deploy:
         docker:
             - image: circleci/golang:1.8
-        - attach_workspace:
-            at: ./archive.tar.gz
         steps:
+            - attach_workspace:
+                at: ./archive.tar.gz
+
             - checkout
 
             - run: go get github.com/tcnksm/ghr
