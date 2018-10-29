@@ -27,7 +27,7 @@ jobs:
                     - composer-v1-{{ checksum "composer.lock" }}
                     # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
                     - composer-v1-
-            - run: composer install -n --prefer-dist
+            - run: composer install --no-ansi --no-interaction --prefer-dist
             - save_cache:
                 key: composer-v1-{{ checksum "composer.lock" }}
                 paths:
@@ -38,9 +38,10 @@ jobs:
     deploy:
         docker:
             - image: circleci/golang:1.8
-        - attach_workspace:
-            at: ./archive.tar.gz
         steps:
+            - attach_workspace:
+                at: ./archive.tar.gz
+
             - checkout
 
             - run: go get github.com/tcnksm/ghr
