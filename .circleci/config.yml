@@ -11,8 +11,10 @@ jobs:
 
             - run: make
 
-            - store_artifacts:
-                path: ./archive.tar.gz
+            - persist_to_workspace:
+                root: /tmp/artifacts
+                paths:
+                    - archive.tar.gz
 
     test:
         docker:
@@ -39,10 +41,10 @@ jobs:
         docker:
             - image: circleci/golang:1.8
         steps:
-            - attach_workspace:
-                at: ./archive.tar.gz
-
             - checkout
+
+            - attach_workspace:
+                at: /tmp/artifacts
 
             - run: go get github.com/tcnksm/ghr
 
@@ -54,7 +56,7 @@ jobs:
                     -r ${CIRCLE_PROJECT_REPONAME}
                     -c ${CIRCLE_SHA1}
                     -delete ${VERSION}
-                    ./archive.tar.gz
+                    /tmp/artifacts
 
 workflows:
     version: 2
