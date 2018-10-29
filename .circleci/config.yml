@@ -11,7 +11,7 @@ jobs:
 
             - run: make
             - run: mkdir -p /tmp/artifacts
-            - run: cp archive.tar.gz plugin-package.tar.gz
+            - run: cp archive.tar.gz /tmp/artifacts/plugin-package.tar.gz
 
             - persist_to_workspace:
                 root: /tmp/artifacts
