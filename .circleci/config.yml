@@ -61,6 +61,18 @@ jobs:
                     "${VERSION}" \
                     /tmp/artifacts
 
+            - run: |
+                VERSION="${CIRCLE_TAG}"
+                git config user.email "release-bot@users.noreply.github.com"
+                git config user.name "release-bot"
+                git checkout release || git checkout -b release
+                cp /tmp/artifacts/plugin-package.tar.gz .
+                git add plugin-package.tar.gz
+                git commit -m "Automatic release v$VERSION"
+                git remote add for-release \
+                   "https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
+                git push -u for-release release
+
 workflows:
     version: 2
     test:
