@@ -38,7 +38,7 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
                 return [
                     'render' => true,
                     'match' => $match,
-                    'pos' => $pos,
+                    'pos' => $pos - strlen('<markdown>'),
                 ];
             default:
                 return [
@@ -65,17 +65,15 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
                 $flavor = Markdown::MARKDOWN_EXTRA;
                 break;
             default:
-                $flavor = Markdown::COMMON;
+                $flavor = Markdown::COMMON_MARK;
                 break;
         }
 
-        /*
-        echo '<pre>';
+        $result = Markdown::parseWithRenderer($renderer, $match, $flavor, $data);
+        /*echo '<pre>';
         var_dump($match);
-        var_dump(htmlspecialchars(Markdown::parseWithRenderer($renderer, $match, $flavor)));
-        echo '</pre>';
-        */
-        Markdown::parseWithRenderer($renderer, $match, $flavor, $data);
+        var_dump(htmlspecialchars($result));
+        echo '</pre>';*/
 
         return true;
     }
