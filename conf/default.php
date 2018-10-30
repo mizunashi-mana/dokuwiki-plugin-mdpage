@@ -1,4 +1,4 @@
 <?php
 
 $conf['debug'] = 0;
-$conf['flavor'] = 'common';
+$conf['flavor'] = 'common-mark';

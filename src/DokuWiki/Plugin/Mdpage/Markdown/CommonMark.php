@@ -4,16 +4,16 @@ namespace DokuWiki\Plugin\Mdpage\Markdown;
 
 use DokuWiki\Plugin\Mdpage\MarkdownRendererTrait;
 
-class Common extends \cebe\markdown\Markdown {
+class CommonMark extends \cebe\markdown\Markdown {
 
     use MarkdownRendererTrait;
 
     protected $renderer = null;
-    protected $context = null;
+    protected $rendererContext = null;
 
-    public function __construct($renderer, $context) {
+    public function __construct($renderer, $rendererContext) {
         $this->renderer = $renderer;
-        $this->context = $context;
+        $this->rendererContext = $rendererContext;
     }
 
 }

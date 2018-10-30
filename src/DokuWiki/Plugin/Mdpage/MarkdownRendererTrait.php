@@ -50,7 +50,6 @@ trait MarkdownRendererTrait {
         return $this->getRenderResult($escapedPos);
     }
 
-    // FIXME: no render
     protected function renderCode($block) {
         $lang = null;
 		if (array_key_exists('language', $block)) {
@@ -94,7 +93,13 @@ trait MarkdownRendererTrait {
     protected function renderHeadline($block) {
         $content = $this->collectText($block['content']);
 
-        $this->renderer->header($content, $block['level'], $this->context['pos']);
+        $this->renderer->header($content, $block['level'], $this->rendererContext['pos']);
+
+        return $this->getRenderResult();
+    }
+
+    protected function renderHr($block) {
+        $this->renderer->hr();
 
         return $this->getRenderResult();
     }
@@ -206,6 +211,22 @@ trait MarkdownRendererTrait {
     }
 
     protected function renderText($block) {
+        $this->renderer->cdata($block[1]);
+
+        return $this->getRenderResult();
+    }
+
+    protected function renderHtml($block) {
+        $content = $block['content'] . "\n";
+
+        // FIXME: support HTML render mode
+        $this->renderer->cdata($content);
+
+        return $this->getRenderResult();
+    }
+
+    protected function renderInlineHtml($block) {
+        // FIXME: support HTML render mode
         $this->renderer->cdata($block[1]);
 
         return $this->getRenderResult();
