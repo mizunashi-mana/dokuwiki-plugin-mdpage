@@ -68,7 +68,7 @@ jobs:
                 git checkout release || git checkout -b release
                 cp /tmp/artifacts/plugin-package.tar.gz .
                 git add -f plugin-package.tar.gz
-                git commit -m "Automatic release v$VERSION"
+                git commit -m "Automatic release $VERSION"
                 git remote add for-release \
                    "https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
                 git push -u for-release release
