@@ -42,6 +42,17 @@ if ! [ -d "$TARGET_DIR/.git" ]; then
     exit 1
 fi
 
+if [ -z "${FORCE_RELEASE:-}" ]; then
+    PLUGIN_DATE="$(grep 'date' "$TARGET_DIR/plugin.info.txt" | awk '{print $2}')"
+    if [ "$PLUGIN_DATE" != "$(date +'%Y-%m-%d')" ]; then
+        cat >&2 <<EOS
+You may forget to update date on plugin.info.txt.
+If you are ok, please rerun with FORCE_RELEASE environment.
+EOS
+        exit 1
+    fi
+fi
+
 VERSION="$1"
 git tag -a "v$VERSION" -m "Version $VERSION"
 git push origin "v$VERSION"
