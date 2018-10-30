@@ -7,12 +7,12 @@ use DokuWiki\Plugin\Mdpage\Markdown;
 class Markdown {
     const GITHUB_FLAVORED = 'GFM';
     const MARKDOWN_EXTRA = 'MarkdownExtra';
-    const COMMON_MARK = 'CommonMark';
+    const TRADITIONAL = 'Traditional';
 
     public static function parseWithRenderer(
         $renderer,
         $content,
-        $flavor = self::COMMON_MARK,
+        $flavor = self::TRADITIONAL,
         $context = null
     ) {
         if ($context == null) {
@@ -29,7 +29,7 @@ class Markdown {
                 $parser = new Markdown\MarkdownExtra($renderer, $context);
                 break;
             default:
-                $parser = new Markdown\CommonMark($renderer, $context);
+                $parser = new Markdown\Traditional($renderer, $context);
                 break;
         }
 

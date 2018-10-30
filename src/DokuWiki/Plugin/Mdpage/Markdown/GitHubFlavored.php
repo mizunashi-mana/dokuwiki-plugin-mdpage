@@ -2,6 +2,8 @@
 
 namespace DokuWiki\Plugin\Mdpage\Markdown;
 
+use DokuWiki\Plugin\Mdpage\MarkdownRendererTrait;
+
 class GitHubFlavored extends \cebe\markdown\GithubMarkdown {
 
     use MarkdownRendererTrait;

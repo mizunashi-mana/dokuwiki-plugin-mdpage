@@ -2,6 +2,8 @@
 
 namespace DokuWiki\Plugin\Mdpage\Markdown;
 
+use DokuWiki\Plugin\Mdpage\MarkdownRendererTrait;
+
 class MarkdownExtra extends \cebe\markdown\MarkdownExtra {
 
     use MarkdownRendererTrait;

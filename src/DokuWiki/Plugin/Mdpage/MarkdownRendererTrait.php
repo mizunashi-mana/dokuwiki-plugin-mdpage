@@ -56,7 +56,6 @@ trait MarkdownRendererTrait {
             $lang = $block['language'];
         }
 
-        var_dump($block);
         $this->renderer->code($block['content'], $lang);
 
         return $this->getRenderResult();

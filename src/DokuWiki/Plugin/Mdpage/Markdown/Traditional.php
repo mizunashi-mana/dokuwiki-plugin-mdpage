@@ -4,7 +4,7 @@ namespace DokuWiki\Plugin\Mdpage\Markdown;
 
 use DokuWiki\Plugin\Mdpage\MarkdownRendererTrait;
 
-class CommonMark extends \cebe\markdown\Markdown {
+class Traditional extends \cebe\markdown\Markdown {
 
     use MarkdownRendererTrait;
 
