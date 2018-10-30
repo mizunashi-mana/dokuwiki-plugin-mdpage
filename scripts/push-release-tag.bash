@@ -56,3 +56,9 @@ fi
 VERSION="$1"
 git tag -a "v$VERSION" -m "Version $VERSION"
 git push origin "v$VERSION"
+
+cat <<EOS
+Success to release: https://github.com/mizunashi-mana/dokuwiki-plugin-mdpage/releases/tag/v$VERSION
+
+Do not forget updating https://www.dokuwiki.org/plugin:mdpage !
+EOS
