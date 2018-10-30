@@ -64,8 +64,11 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
             case 'markdown-extra':
                 $flavor = Markdown::MARKDOWN_EXTRA;
                 break;
+            case 'traditional':
+                $flavor = Markdown::TRADITIONAL;
+                break;
             default:
-                $flavor = Markdown::COMMON_MARK;
+                $flavor = Markdown::GITHUB_FLAVORED;
                 break;
         }
 

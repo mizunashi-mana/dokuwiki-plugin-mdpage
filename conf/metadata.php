@@ -7,7 +7,7 @@ $meta['debug'] = [
 $meta['flavor'] = [
     'multichoice',
     '_choices' => [
-        'common-mark',
+        'traditional',
         'github-flavored',
         'markdown-extra',
     ],

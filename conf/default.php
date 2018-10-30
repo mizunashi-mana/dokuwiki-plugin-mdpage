@@ -1,4 +1,4 @@
 <?php
 
 $conf['debug'] = 0;
-$conf['flavor'] = 'common-mark';
+$conf['flavor'] = 'github-flavored';
