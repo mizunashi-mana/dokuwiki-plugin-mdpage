@@ -69,13 +69,16 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
                 break;
         }
 
+        $result = Markdown::parseWithRenderer($renderer, $match, $flavor, $data);
         /*
         echo '<pre>';
-        var_dump($match);
-        var_dump(htmlspecialchars(Markdown::parseWithRenderer($renderer, $match, $flavor)));
+        var_dump($result);
         echo '</pre>';
         */
-        Markdown::parseWithRenderer($renderer, $match, $flavor, $data);
+        if (!$result) {
+            $this->_debug('Parse error!', -1, __LINE__);
+            $renderer->cdata($match);
+        }
 
         return true;
     }

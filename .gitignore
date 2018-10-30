@@ -1,5 +1,8 @@
 *.tar.gz
 
+# for DokuWiki
+/manager.dat
+
 # for Composer
 /vendor/
 /bin/
