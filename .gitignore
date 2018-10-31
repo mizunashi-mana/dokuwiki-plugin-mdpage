@@ -6,3 +6,6 @@
 # for Composer
 /vendor/
 /bin/
+
+# for CS Fixer
+.php_cs.cache

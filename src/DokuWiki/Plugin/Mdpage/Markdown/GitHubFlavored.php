@@ -5,7 +5,6 @@ namespace DokuWiki\Plugin\Mdpage\Markdown;
 use DokuWiki\Plugin\Mdpage\MarkdownRendererTrait;
 
 class GitHubFlavored extends \cebe\markdown\GithubMarkdown {
-
     use MarkdownRendererTrait;
 
     protected $renderer = null;
@@ -15,5 +14,4 @@ class GitHubFlavored extends \cebe\markdown\GithubMarkdown {
         $this->renderer = $renderer;
         $this->rendererContext = $rendererContext;
     }
-
 }

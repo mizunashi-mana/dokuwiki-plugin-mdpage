@@ -1,0 +1,21 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->files()
+    ->in(__DIR__.'/conf')
+    ->in(__DIR__.'/lang')
+    ->in(__DIR__.'/src')
+    ->in(__DIR__.'/tests')
+    ->name('*.php')
+    ;
+
+return PhpCsFixer\Config::create()
+    ->setFinder($finder)
+    ->setRules([
+        '@Symfony' => true,
+        'yoda_style' => false,
+        'braces' => [
+            'position_after_functions_and_oop_constructs' => 'same',
+        ],
+    ])
+    ;

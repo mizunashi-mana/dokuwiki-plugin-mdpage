@@ -42,6 +42,8 @@ jobs:
                 paths:
                     - vendor
 
+            - run: ./bin/php-cs-fixer fix --dry-run
+
             - run: composer test
 
     deploy:

@@ -5,7 +5,6 @@ namespace DokuWiki\Plugin\Mdpage\Markdown;
 use DokuWiki\Plugin\Mdpage\MarkdownRendererTrait;
 
 class Traditional extends \cebe\markdown\Markdown {
-
     use MarkdownRendererTrait;
 
     protected $renderer = null;
@@ -15,5 +14,4 @@ class Traditional extends \cebe\markdown\Markdown {
         $this->renderer = $renderer;
         $this->rendererContext = $rendererContext;
     }
-
 }
