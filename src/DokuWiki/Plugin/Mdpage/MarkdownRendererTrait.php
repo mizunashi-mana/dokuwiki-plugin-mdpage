@@ -3,7 +3,6 @@
 namespace DokuWiki\Plugin\Mdpage;
 
 trait MarkdownRendererTrait {
-
     private $isParsed = false;
     private $renderPos = 0;
     private $listLevel = 0;
@@ -15,6 +14,7 @@ trait MarkdownRendererTrait {
 
         $this->isParsed = true;
         $this->renderPos = strlen($this->renderer->doc);
+
         return $this->parse($content);
     }
 
@@ -27,6 +27,7 @@ trait MarkdownRendererTrait {
 
         $result = substr($this->renderer->doc, $renderPos);
         $this->renderPos = strlen($this->renderer->doc);
+
         return $result;
     }
 
@@ -34,11 +35,11 @@ trait MarkdownRendererTrait {
         $escapedPos = $this->renderPos;
 
         $this->renderer->p_open();
-		$this->renderAbsy($block['content']);
+        $this->renderAbsy($block['content']);
         $this->renderer->p_close();
 
         return $this->getRenderResult($escapedPos);
-	}
+    }
 
     protected function renderQuote($block) {
         $escapedPos = $this->renderPos;
@@ -52,7 +53,7 @@ trait MarkdownRendererTrait {
 
     protected function renderCode($block) {
         $lang = null;
-		if (array_key_exists('language', $block)) {
+        if (array_key_exists('language', $block)) {
             $lang = $block['language'];
         }
 
@@ -109,24 +110,24 @@ trait MarkdownRendererTrait {
         $escapedPos = $this->renderPos;
 
         if (isset($block['refkey'])) {
-			if (($ref = $this->lookupReference($block['refkey'])) !== false) {
-				$block = array_merge($block, $ref);
-			} else {
-				if (strncmp($block['orig'], '[', 1) === 0) {
+            if (($ref = $this->lookupReference($block['refkey'])) !== false) {
+                $block = array_merge($block, $ref);
+            } else {
+                if (strncmp($block['orig'], '[', 1) === 0) {
                     $this->renderer->cdata('[');
                     $this->renderAbsy($this->parseInline(substr($block['orig'], 1)));
-				} else {
+                } else {
                     $this->renderer->cdata($block['orig']);
                 }
 
                 return $this->getRenderResult($escapedPos);
-			}
+            }
         }
 
         $url = $block['url'];
         if (strpos($url, '/') === false) {
             $this->renderer->internallink($url, $this->collectText($block['text']));
-        } else if (empty($block['title'])) {
+        } elseif (empty($block['title'])) {
             $this->renderer->externallink($url, $this->collectText($block['text']));
         } else {
             $this->renderer->footnote_open();
@@ -140,19 +141,19 @@ trait MarkdownRendererTrait {
     protected function renderImage($block) {
         $escapedPos = $this->renderPos;
 
-		if (isset($block['refkey'])) {
-			if (($ref = $this->lookupReference($block['refkey'])) !== false) {
-				$block = array_merge($block, $ref);
-			} else {
-				if (strncmp($block['orig'], '![', 2) === 0) {
+        if (isset($block['refkey'])) {
+            if (($ref = $this->lookupReference($block['refkey'])) !== false) {
+                $block = array_merge($block, $ref);
+            } else {
+                if (strncmp($block['orig'], '![', 2) === 0) {
                     $this->renderer->cdata('![');
                     $this->renderAbsy($this->parseInline(substr($block['orig'], 2)));
-				} else {
+                } else {
                     $this->renderer->cdata($block['orig']);
                 }
 
                 return $this->getRenderResult($escapedPos);
-			}
+            }
         }
 
         $url = $block['url'];
@@ -218,7 +219,7 @@ trait MarkdownRendererTrait {
     }
 
     protected function renderHtml($block) {
-        $content = $block['content'] . "\n";
+        $content = $block['content']."\n";
 
         // FIXME: support HTML render mode
         $this->renderer->cdata($content);
@@ -244,5 +245,4 @@ trait MarkdownRendererTrait {
 
         return $result;
     }
-
 }

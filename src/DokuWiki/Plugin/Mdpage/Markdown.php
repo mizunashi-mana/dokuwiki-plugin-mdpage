@@ -2,8 +2,6 @@
 
 namespace DokuWiki\Plugin\Mdpage;
 
-use DokuWiki\Plugin\Mdpage\Markdown;
-
 class Markdown {
     const GITHUB_FLAVORED = 'GFM';
     const MARKDOWN_EXTRA = 'MarkdownExtra';

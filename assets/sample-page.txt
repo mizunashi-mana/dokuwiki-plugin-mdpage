@@ -1,0 +1,30 @@
+<markdown>
+# Header
+
+simple paragraph: *emph*, **strong** and `mono`.
+
+<html>
+<p>inline html</p>
+</html>
+
+> quote
+
+```
+code block
+```
+
+[link](https://www.dokuwiki.org)
+
+![image](https://secure.php.net/images/php.gif)
+
+* List
+    - Sub item 1
+    - Sub item 2
+* Item 2
+    - Sub item 1
+
+1. Ordered List
+    - Sub item 1
+2. Item 2
+    - Sub item 1
+</markdown>

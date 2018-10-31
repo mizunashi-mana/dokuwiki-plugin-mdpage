@@ -5,7 +5,6 @@ namespace DokuWiki\Plugin\Mdpage\Markdown;
 use DokuWiki\Plugin\Mdpage\MarkdownRendererTrait;
 
 class MarkdownExtra extends \cebe\markdown\MarkdownExtra {
-
     use MarkdownRendererTrait;
 
     protected $renderer = null;
@@ -15,5 +14,4 @@ class MarkdownExtra extends \cebe\markdown\MarkdownExtra {
         $this->renderer = $renderer;
         $this->rendererContext = $rendererContext;
     }
-
 }

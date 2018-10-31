@@ -59,14 +59,14 @@ MD;
     }
 
     private function assertXHTMLs($expected_xhtmls, $flavor) {
-        for ($i = 0, $l = count($this->markdowns); $i < $l; $i++) {
+        for ($i = 0, $l = count($this->markdowns); $i < $l; ++$i) {
             $expected_xhtml = $expected_xhtmls[$i];
             $markdown = $this->markdowns[$i];
 
-            $expected = new DOMDocument;
+            $expected = new DOMDocument();
             $expected->loadHTML($expected_xhtml);
 
-            $actual = new DOMDocument;
+            $actual = new DOMDocument();
             $actual->loadHTML($this->renderMarkdownToXHTML($markdown, $flavor));
 
             $this->assertEquals($expected, $actual);
