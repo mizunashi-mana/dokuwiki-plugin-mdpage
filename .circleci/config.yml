@@ -1,10 +1,6 @@
 version: 2
 
-jobs:
-    dummy:
-        steps: []
+jobs: {}
 
 workflows:
     version: 2
-    main:
-        jobs: []
