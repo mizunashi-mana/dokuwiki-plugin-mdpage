@@ -56,7 +56,7 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
         return $this->renderWithRenderer($renderer, $match, $data);
     }
 
-    protected function renderWithRenderer(Doku_Renderer $renderer, string $match, $data) {
+    protected function renderWithRenderer(Doku_Renderer $renderer, $match, $data) {
         switch ($this->getConf('flavor')) {
             case 'github-flavored':
                 $flavor = Markdown::GITHUB_FLAVORED;
