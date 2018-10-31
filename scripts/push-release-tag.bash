@@ -42,11 +42,27 @@ if ! [ -d "$TARGET_DIR/.git" ]; then
     exit 1
 fi
 
+if [ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]; then
+    echo "Must checkout master branch." >&2
+    exit 1
+fi
+
 if [ -z "${FORCE_RELEASE:-}" ]; then
     PLUGIN_DATE="$(grep 'date' "$TARGET_DIR/plugin.info.txt" | awk '{print $2}')"
     if [ "$PLUGIN_DATE" != "$(date +'%Y-%m-%d')" ]; then
         cat >&2 <<EOS
 You may forget to update date on plugin.info.txt.
+If you are ok, please rerun with FORCE_RELEASE environment.
+EOS
+        exit 1
+    fi
+fi
+
+git fetch origin master
+if [ -z "${FORCE_RELEASE:-}" ]; then
+    if [ "$(git describe origin/master)" != "$(git describe master)" ]; then
+        cat >&2 <<EOS
+You may forget to pull master changes.
 If you are ok, please rerun with FORCE_RELEASE environment.
 EOS
         exit 1
