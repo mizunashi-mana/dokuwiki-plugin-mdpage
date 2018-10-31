@@ -35,8 +35,10 @@ jobs:
             # `_test` directory of dokuwiki is not included by `--prefer-dist` (maybe, this is GitHub issue).
             # This is the fallback.
             - run: |
-                rm -rf vendor/splitbrain/dokuwiki
-                composer install --no-ansi --no-interaction --prefer-source
+                if [ ! -d vendor/splitbrain/dokuwiki/_test ]; then
+                    rm -rf vendor/splitbrain/dokuwiki
+                    composer install --no-ansi --no-interaction --prefer-source
+                fi
             - save_cache:
                 key: composer-v1-{{ checksum "composer.lock" }}
                 paths:
@@ -45,6 +47,29 @@ jobs:
             - run: ./bin/php-cs-fixer fix --dry-run
 
             - run: composer test
+
+    docker-test:
+        machine: true
+        steps:
+            - checkout
+
+            - run: docker-compose build
+
+            - restore_cache:
+                keys:
+                    - composer-v1-{{ checksum "composer.lock" }}
+                    # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+                    - composer-v1-
+
+            - run: |
+                docker-compose up -d
+                sleep 10
+
+            - run: |
+                curl -v http://localhost:8080/start | \
+                    grep 'simple paragraph: <em>emph</em>, <strong>strong</strong> and <code>mono</code>.'
+
+            - run: docker-compose down
 
     deploy:
         docker:
@@ -85,6 +110,12 @@ workflows:
     test:
         jobs:
             - test:
+                filters:
+                    branches:
+                        ignore: release
+            - docker-test:
+                requires:
+                    - test
                 filters:
                     branches:
                         ignore: release
