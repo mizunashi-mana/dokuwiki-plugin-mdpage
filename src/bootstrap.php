@@ -1,7 +1,5 @@
 <?php
 
-ini_set('display_errors', 'On');
-
 function includeIfExists($file)
 {
     return file_exists($file) ? include $file : false;

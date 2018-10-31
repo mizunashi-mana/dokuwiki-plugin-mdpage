@@ -70,15 +70,17 @@ trait MarkdownRendererTrait {
             $this->renderer->listu_open();
         }
 
-        $this->renderer->listitem_open($this->listLevel);
-        $this->listLevel = $this->listLevel + 1;
+        foreach ($block['items'] as $item => $itemLines) {
+            $this->renderer->listitem_open($this->listLevel);
+            $this->listLevel = $this->listLevel + 1;
 
-        $this->renderer->listcontent_open();
-        $this->renderAbsy($block);
-        $this->renderer->listcontent_close();
+            $this->renderer->listcontent_open();
+            $this->renderAbsy($itemLines);
+            $this->renderer->listcontent_close();
 
-        $this->listLevel = $this->listLevel - 1;
-        $this->renderer->listitem_close();
+            $this->listLevel = $this->listLevel - 1;
+            $this->renderer->listitem_close();
+        }
 
         if ($block['list'] == 'ol') {
             $this->renderer->listo_close();

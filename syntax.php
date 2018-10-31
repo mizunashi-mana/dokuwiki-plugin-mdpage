@@ -2,7 +2,7 @@
 
 if(!defined('DOKU_INC')) die();
 
-require __DIR__.'/src/bootstrap.php';
+require_once __DIR__.'/src/bootstrap.php';
 
 use DokuWiki\Plugin\Mdpage\Markdown;
 
