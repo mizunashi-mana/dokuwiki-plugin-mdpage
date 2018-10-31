@@ -43,6 +43,12 @@ code block
     - Sub item 1
 2. Item 2
     - Sub item 1
+
+| head 1 | head 2 | head 3 | head 4 |
+|:---: | :---| ---: | --- |
+| col 1x1 | col 1x2 | col 1x3 | col 1x4 |
+| col 2x1 | col 2x2 | col 2x3 | col 2x4 |
+
 MD;
     }
 
@@ -131,6 +137,16 @@ quote
 </div>
 </li>
 </ol>
+<div class="table"><table class="inline">
+\t<thead>
+<th class="col centeralign"> head 1 </th><th class="col1 leftalign">head 2 </th><th class="col2 rightalign">head 3 </th><th class="col3">head 4 </th>\t</thead>
+\t<tr class="row0">
+\t\t<td class="col0 centeralign"> col 1x1 </td><td class="col1 leftalign">col 1x2 </td><td class="col2 rightalign">col 1x3 </td><td class="col3">col 1x4 </td>
+\t</tr>
+\t<tr class="row1">
+\t\t<td class="col0 centeralign"> col 2x1 </td><td class="col1 leftalign">col 2x2 </td><td class="col2 rightalign">col 2x3 </td><td class="col3">col 2x4 </td>
+\t</tr>
+</table></div>
 
 XHTML;
 
@@ -199,6 +215,13 @@ quote
 </li>
 </ol>
 
+<p>
+| head 1 | head 2 | head 3 | head 4 |
+|:---: | :---| ---: | --- |
+| col 1x1 | col 1x2 | col 1x3 | col 1x4 |
+| col 2x1 | col 2x2 | col 2x3 | col 2x4 |
+</p>
+
 XHTML;
 
         $this->assertXHTMLs($rendered_xhtmls, $flavor);
@@ -262,6 +285,16 @@ quote
 </div>
 </li>
 </ol>
+<div class="table"><table class="inline">
+\t<thead>
+<th class="col centeralign"> head 1 </th><th class="col1 leftalign">head 2 </th><th class="col2 rightalign">head 3 </th><th class="col3">head 4 </th>\t</thead>
+\t<tr class="row0">
+\t\t<td class="col0 centeralign"> col 1x1 </td><td class="col1 leftalign">col 1x2 </td><td class="col2 rightalign">col 1x3 </td><td class="col3">col 1x4 </td>
+\t</tr>
+\t<tr class="row1">
+\t\t<td class="col0 centeralign"> col 2x1 </td><td class="col1 leftalign">col 2x2 </td><td class="col2 rightalign">col 2x3 </td><td class="col3">col 2x4 </td>
+\t</tr>
+</table></div>
 
 XHTML;
 
