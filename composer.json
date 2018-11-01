@@ -26,9 +26,9 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8.35 || ^5.7",
-        "psy/psysh": "^0.9.9",
         "splitbrain/dokuwiki": "dev-stable#release_stable_2018-04-22a",
-        "friendsofphp/php-cs-fixer": "^2.13"
+        "friendsofphp/php-cs-fixer": "^2.13",
+        "metasyntactical/composer-plugin-license-check": "^0.3.0"
     },
     "autoload": {
         "psr-4": {
@@ -45,5 +45,11 @@
             "type": "vcs",
             "url": "https://github.com/splitbrain/dokuwiki"
         }
-    ]
+    ],
+    "extra": {
+        "metasyntactical/composer-plugin-license-check": {
+            "whitelist": [],
+            "blacklist": []
+        }
+    }
 }
