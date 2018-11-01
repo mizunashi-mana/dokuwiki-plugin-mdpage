@@ -1,4 +1,4 @@
-# Contribution Guide
+# Contributing Guide
 
 Read the section for your purpose.
 

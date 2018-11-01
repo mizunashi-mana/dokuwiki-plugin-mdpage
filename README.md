@@ -6,9 +6,9 @@
 
 See https://www.dokuwiki.org/plugin:mdpage
 
-## Contribution
+## Contributing Guide
 
-See [Contribution Guide](CONTRIBUTION.md).
+See [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
