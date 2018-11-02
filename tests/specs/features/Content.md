@@ -1,10 +1,8 @@
 # Header
 
-simple paragraph: *emph*, **strong** and `mono`.
+<!-- comment -->
 
-<del>
-<p>inline html</p>
-</del>
+simple paragraph: *emph*, **strong** and `mono`.
 
 > quote
 
