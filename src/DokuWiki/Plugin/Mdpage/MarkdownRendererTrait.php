@@ -62,7 +62,7 @@ trait MarkdownRendererTrait {
     // Markdown
 
     protected function renderText($block) {
-        $this->renderer->cdata($block[1]);
+        $this->renderer->cdata(html_entity_decode($block[1]));
 
         return $this->getRenderResult();
     }
