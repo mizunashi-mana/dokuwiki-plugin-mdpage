@@ -62,7 +62,7 @@ trait MarkdownRendererTrait {
     // Markdown
 
     protected function renderText($block) {
-        $this->renderer->cdata($block[1]);
+        $this->renderer->cdata(html_entity_decode($block[1]));
 
         return $this->getRenderResult();
     }
@@ -92,18 +92,53 @@ trait MarkdownRendererTrait {
 
     // block\HtmlTrait
 
+    private function isCommentOnlyXMLString($content) {
+        if (preg_match('/^\s*<!--.+-->\s*$/', $content)) {
+            return true;
+        }
+
+        return false;
+    }
+
     protected function renderHtml($block) {
         $content = $block['content']."\n";
 
-        // FIXME: support HTML render mode
-        $this->renderer->cdata($content);
+        if ($this->isCommentOnlyXMLString($content)) {
+            return '';
+        }
+
+        // Note: Fallback html rendering for DokuWiki 2018-04-22a
+        //
+        // See https://github.com/splitbrain/dokuwiki/issues/2563
+        // We should fallback for DokuWiki 2018-04-22a to avoid `Function create_function() is deprecated`
+        global $conf;
+        if (phpversion() >= '7.2' && !$conf['htmlok']) {
+            $this->renderer->monospace_open();
+            $this->renderer->cdata($content);
+            $this->renderer->monospace_close();
+        } else {
+            $this->renderer->htmlblock($content);
+        }
 
         return $this->getRenderResult();
     }
 
     protected function renderInlineHtml($block) {
-        // FIXME: support HTML render mode
-        $this->renderer->cdata($block[1]);
+        $content = $block[1];
+
+        if ($this->isCommentOnlyXMLString($content)) {
+            return '';
+        }
+
+        // See the note: Fallback html rendering for DokuWiki 2018-04-22a
+        global $conf;
+        if (phpversion() >= '7.2' && !$conf['htmlok']) {
+            $this->renderer->monospace_open();
+            $this->renderer->cdata($content);
+            $this->renderer->monospace_close();
+        } else {
+            $this->renderer->html($content);
+        }
 
         return $this->getRenderResult();
     }
