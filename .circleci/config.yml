@@ -46,7 +46,18 @@ jobs:
 
             - run: ./bin/php-cs-fixer fix --dry-run
 
-            - run: composer test
+            - run: |
+                curl -o cc-test-reporter -sSL https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+                chmod +x ./cc-test-reporter
+
+            - run: |
+                sudo docker-php-ext-enable xdebug
+
+            - run: |
+                ./cc-test-reporter before-build
+                composer test -- --coverage-clover clover.xml
+                ./cc-test-reporter after-build --exit-code $? \
+                    --coverage-input-type clover
 
     docker-test:
         machine: true

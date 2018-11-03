@@ -2,7 +2,7 @@
 
 <!-- comment -->
 
-simple paragraph: *emph*, **strong** and `mono`.
+simple paragraph: *emph*, **strong**, ~~strike~~ and `mono`.
 
 > quote
 
@@ -10,9 +10,17 @@ simple paragraph: *emph*, **strong** and `mono`.
 code block
 ```
 
+https://www.dokuwiki.org/
+
+<https://www.dokuwiki.org/>
+
+<noreply@noreply.com>
+
 [link](https://www.dokuwiki.org)
 
 ![image](https://secure.php.net/images/php.gif)
+
+----
 
 * List
     - Sub item 1

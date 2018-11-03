@@ -14,7 +14,11 @@
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
+            <file>syntax.php</file>
             <directory suffix=".php">src</directory>
+            <exclude>
+                <file>src/bootstrap.php</file>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>

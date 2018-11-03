@@ -36,6 +36,35 @@ class MarkdownSpecTest extends DokuWikiTest {
         );
     }
 
+    public function testHtmlok() {
+        global $conf;
+        $conf['htmlok'] = 1;
+
+        $this->assertSpec(
+            'htmlok/Content',
+            $this->defaultFlavors
+        );
+    }
+
+    /**
+     * This plugin has fallback HTML rendering for PHP 7.2
+     * So, the results of rendering are different between PHP >= 7.2 and PHP < 7.2.
+     *
+     * Therefore, we test only HTML rendering do not throw exceptions.
+     */
+    public function testCanParseHtml() {
+        $markdown = <<<EOS
+<del>deleted</del>
+EOS;
+
+        foreach ($this->defaultFlavors as $flavor) {
+            $this->assertGreaterThan(
+                10,
+                strlen($this->renderMarkdownToXHTML($markdown, $flavor))
+            );
+        }
+    }
+
     private function renderMarkdownToXHTML($text, $flavor) {
         $renderer = new Doku_Renderer_xhtml();
         $data = [

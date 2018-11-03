@@ -10,15 +10,9 @@ class Markdown {
     public static function parseWithRenderer(
         $renderer,
         $content,
-        $flavor = self::TRADITIONAL,
-        $context = null
+        $flavor,
+        $context
     ) {
-        if ($context == null) {
-            $context = [
-                'pos' => 0,
-            ];
-        }
-
         switch ($flavor) {
             case self::GITHUB_FLAVORED:
                 $parser = new Markdown\GitHubFlavored($renderer, $context);
