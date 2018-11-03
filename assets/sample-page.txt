@@ -1,17 +1,19 @@
 <markdown>
 # Header
 
+<!-- comment -->
+
 simple paragraph: *emph*, **strong** and `mono`.
 
-<html>
-<p>inline html</p>
-</html>
+<p>inline html s</p>
 
 > quote
 
 ```
 code block
 ```
+
+----
 
 [link](https://www.dokuwiki.org)
 

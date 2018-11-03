@@ -4,14 +4,14 @@
 
 ## Installation / Usage
 
-See https://www.dokuwiki.org/plugin:mdpage
+See <https://www.dokuwiki.org/plugin:mdpage>.
 
-## Contributing Guide
+## Report a bug / Contribute a fix
 
 See [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
-This plugin is licensed under the MIT License; see [LICENSE File](LICENSE).
+This plugin is licensed under [the MIT License](LICENSE).
 
-* Using [cebe/markdown](https://github.com/cebe/markdown) to parse Markdown texts.
+* Using [cebe/markdown](https://github.com/cebe/markdown) to parse Markdown texts under [the MIT License](https://github.com/cebe/markdown/blob/master/LICENSE).
