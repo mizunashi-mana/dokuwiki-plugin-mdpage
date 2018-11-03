@@ -12,7 +12,7 @@ Read the section for your purpose.
 
 1. `composer install --prefer-source --dev`
 2. `./bin/php-cs-fixer fix`
-3. `composer test`
+3. `composer test` and fix any failing tests
 4. `git commit` with message
 5. Open a pull request and fix any failing tests
 
