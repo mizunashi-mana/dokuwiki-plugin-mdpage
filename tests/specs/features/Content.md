@@ -20,6 +20,14 @@ https://www.dokuwiki.org/
 
 ![image](https://secure.php.net/images/php.gif)
 
+[link-ref][link-ref]
+
+[link-ref]: https://www.dokuwiki.org
+
+![image-ref][image-ref]
+
+[image-ref]: https://secure.php.net/images/php.gif
+
 ----
 
 * List
