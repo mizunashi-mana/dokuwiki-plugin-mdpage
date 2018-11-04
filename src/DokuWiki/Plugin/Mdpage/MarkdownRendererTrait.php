@@ -283,22 +283,33 @@ trait MarkdownRendererTrait {
 
     abstract protected function lookupReference($key);
 
+    abstract protected function parseInline($line);
+
+    private function lookupRefKeyWithFallback($prefix, $block) {
+        if (!isset($block['refkey'])) {
+            return $block;
+        }
+
+        if (($ref = $this->lookupReference($block['refkey'])) !== false) {
+            return array_merge($block, $ref);
+        }
+
+        $prefix_len = strlen($prefix);
+        if (strncmp($block['orig'], $prefix, $prefix_len) === 0) {
+            $this->renderer->cdata($prefix);
+            $this->renderAbsy($this->parseInline(substr($block['orig'], $prefix_len)));
+        } else {
+            $this->renderer->cdata($block['orig']);
+        }
+
+        return false;
+    }
+
     protected function renderLink($block) {
         $escapedPos = $this->renderPos;
 
-        if (isset($block['refkey'])) {
-            if (($ref = $this->lookupReference($block['refkey'])) !== false) {
-                $block = array_merge($block, $ref);
-            } else {
-                if (strncmp($block['orig'], '[', 1) === 0) {
-                    $this->renderer->cdata('[');
-                    $this->renderAbsy($this->parseInline(substr($block['orig'], 1)));
-                } else {
-                    $this->renderer->cdata($block['orig']);
-                }
-
-                return $this->getRenderResult($escapedPos);
-            }
+        if (($block = $this->lookupRefKeyWithFallback('[', $block)) === false) {
+            return $this->getRenderResult($escapedPos);
         }
 
         $url = $block['url'];
@@ -318,19 +329,8 @@ trait MarkdownRendererTrait {
     protected function renderImage($block) {
         $escapedPos = $this->renderPos;
 
-        if (isset($block['refkey'])) {
-            if (($ref = $this->lookupReference($block['refkey'])) !== false) {
-                $block = array_merge($block, $ref);
-            } else {
-                if (strncmp($block['orig'], '![', 2) === 0) {
-                    $this->renderer->cdata('![');
-                    $this->renderAbsy($this->parseInline(substr($block['orig'], 2)));
-                } else {
-                    $this->renderer->cdata($block['orig']);
-                }
-
-                return $this->getRenderResult($escapedPos);
-            }
+        if (($block = $this->lookupRefKeyWithFallback('![', $block)) === false) {
+            return $this->getRenderResult($escapedPos);
         }
 
         $url = $block['url'];
