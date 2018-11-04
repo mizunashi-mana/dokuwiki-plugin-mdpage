@@ -317,10 +317,6 @@ trait MarkdownRendererTrait {
             $this->renderer->internallink($url, $this->collectText($block['text']));
         } elseif (empty($block['title'])) {
             $this->renderer->externallink($url, $this->collectText($block['text']));
-        } else {
-            $this->renderer->footnote_open();
-            $this->renderAbsy($block['text']);
-            $this->renderer->footnote_close();
         }
 
         return $this->getRenderResult($escapedPos);
