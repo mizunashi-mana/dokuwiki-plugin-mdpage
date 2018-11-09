@@ -315,7 +315,7 @@ trait MarkdownRendererTrait {
         $url = $block['url'];
         if (strpos($url, '/') === false) {
             $this->renderer->internallink($url, $this->collectText($block['text']));
-        } elseif (empty($block['title'])) {
+        } else { // title is not supported
             $this->renderer->externallink($url, $this->collectText($block['text']));
         }
 

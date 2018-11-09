@@ -29,13 +29,6 @@ class MarkdownSpecTest extends DokuWikiTest {
         );
     }
 
-    public function testIssue24() {
-        $this->assertSpec(
-            'issue-24/Content',
-            $this->defaultFlavors
-        );
-    }
-
     public function testHtmlok() {
         global $conf;
         $conf['htmlok'] = 1;
@@ -56,6 +49,20 @@ class MarkdownSpecTest extends DokuWikiTest {
     public function testCannotLookupRef() {
         $this->assertSpec(
             'cannot-lookup-ref/Content',
+            $this->defaultFlavors
+        );
+    }
+
+    public function testIssue24() {
+        $this->assertSpec(
+            'issue-24/Content',
+            $this->defaultFlavors
+        );
+    }
+
+    public function testIssue35() {
+        $this->assertSpec(
+            'issue-35/Content',
             $this->defaultFlavors
         );
     }
