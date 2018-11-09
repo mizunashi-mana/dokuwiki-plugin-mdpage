@@ -48,7 +48,7 @@ if [ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]; then
 fi
 
 if [ -z "${FORCE_RELEASE:-}" ]; then
-    PLUGIN_DATE="$(grep 'date' "$TARGET_DIR/plugin.info.txt" | awk '{print $2}')"
+    PLUGIN_DATE="$(git -C $TARGET_DIR show master:plugin.info.txt | grep 'date' | awk '{print $2}')"
     if [ "$PLUGIN_DATE" != "$(date +'%Y-%m-%d')" ]; then
         cat >&2 <<EOS
 You may forget to update date on plugin.info.txt.
