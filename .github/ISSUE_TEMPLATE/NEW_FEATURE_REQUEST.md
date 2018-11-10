@@ -15,6 +15,8 @@ Please note we will close your issue without comment if you delete, do not read 
     * Is there any other solution?  Why choose it?
 -->
 
+**This is a feature request.**
+
 Specification:
 
 Motivations:
