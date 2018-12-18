@@ -1,7 +1,7 @@
 base   mdpage
 author Mizunashi Mana
 email  mizunashi@git.noreply
-date   2018-11-09
+date   2018-12-19
 name   Markdown Page Plugin
 desc   Write your own Markdown page
 url    https://www.dokuwiki.org/plugin:mdpage
