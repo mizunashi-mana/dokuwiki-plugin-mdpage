@@ -67,6 +67,13 @@ class MarkdownSpecTest extends DokuWikiTest {
         );
     }
 
+    public function testIssue40() {
+        $this->assertSpec(
+            'issue-40/Content',
+            $this->defaultFlavors
+        );
+    }
+
     /**
      * This plugin has fallback HTML rendering for PHP 7.2
      * So, the results of rendering are different between PHP >= 7.2 and PHP < 7.2.

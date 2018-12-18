@@ -62,7 +62,17 @@ trait MarkdownRendererTrait {
     // Markdown
 
     protected function renderText($block) {
-        $this->renderer->cdata(html_entity_decode($block[1]));
+        $contentLines = preg_split('/  +\n/', $block[1]);
+
+        $first = true;
+        foreach ($contentLines as $contentLine) {
+            if ($first) {
+                $first = false;
+            } else {
+                $this->renderer->linebreak();
+            }
+            $this->renderer->cdata(html_entity_decode($contentLine));
+        }
 
         return $this->getRenderResult();
     }
