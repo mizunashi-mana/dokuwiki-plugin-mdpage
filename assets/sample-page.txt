@@ -17,7 +17,11 @@ code block
 
 [link](https://www.dokuwiki.org)
 
+[internal link](:start)
+
 ![image](https://secure.php.net/images/php.gif)
+
+![internal image](:wiki:dokuwiki-128.png)
 
 * List
     - Sub item 1
