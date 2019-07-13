@@ -322,11 +322,23 @@ trait MarkdownRendererTrait {
             return $this->getRenderResult($escapedPos);
         }
 
+        // See https://github.com/splitbrain/dokuwiki/blob/cbaf278c50e5baf946b3bd606c369735fe0953be/inc/parser/handler.php#L527
         $url = $block['url'];
-        if (strpos($url, '/') === false) {
-            $this->renderer->internallink($url, $this->collectText($block['text']));
-        } else { // title is not supported
-            $this->renderer->externallink($url, $this->collectText($block['text']));
+        $text = $this->collectText($block['text']);
+
+        if (link_isinterwiki($url)) {
+            // Interwiki
+            $interwiki = explode('>', $url, 2);
+            $this->renderer->interwikilink($url, $text, strtolower($interwiki[0]), $interwiki[1]);
+        } elseif (preg_match('#^([a-z0-9\-\.+]+?)://#i', $url)) {
+            // external link (accepts all protocols)
+            $this->renderer->externallink($url, $text);
+        } elseif (preg_match('!^#.+!', $url)) {
+            // local link
+            $this->renderer->locallink(substr($url, 1), $text);
+        } else {
+            // internal link
+            $this->renderer->internallink($url, $text);
         }
 
         return $this->getRenderResult($escapedPos);
@@ -339,11 +351,14 @@ trait MarkdownRendererTrait {
             return $this->getRenderResult($escapedPos);
         }
 
+        // See https://github.com/splitbrain/dokuwiki/blob/cbaf278c50e5baf946b3bd606c369735fe0953be/inc/parser/handler.php#L722
         $url = $block['url'];
-        if (strpos($url, '/') === false) {
-            $this->renderer->internalmedia($url, $block['text']);
+        $text = $block['text'];
+
+        if (media_isexternal($url) || link_isinterwiki($url)) {
+            $this->renderer->externalmedia($url, $text);
         } else {
-            $this->renderer->externalmedia($url, $block['text']);
+            $this->renderer->internalmedia($url, $text);
         }
 
         return $this->getRenderResult($escapedPos);
