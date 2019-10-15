@@ -4,8 +4,10 @@ namespace DokuWiki\Plugin\Mdpage\Markdown;
 
 use DokuWiki\Plugin\Mdpage\MarkdownRendererTrait;
 
-class GitHubFlavored extends \cebe\markdown\GithubMarkdown {
-    use MarkdownRendererTrait;
+class GitHubFlavored extends \cebe\markdown\GithubMarkdown  {
+    use \Kirra\Markdown\TaskListsTrait, MarkdownRendererTrait {
+        MarkdownRendererTrait::renderCheckbox insteadOf \Kirra\Markdown\TaskListsTrait;
+    }
 
     protected $renderer = null;
     protected $rendererContext = null;

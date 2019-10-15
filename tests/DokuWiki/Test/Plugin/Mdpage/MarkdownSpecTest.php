@@ -53,6 +53,13 @@ class MarkdownSpecTest extends DokuWikiTest {
         );
     }
 
+    public function testCheckListRef() {
+        $this->assertSpec(
+            'check-list/Content',
+            $this->defaultFlavors
+        );
+    }
+
     public function testIssue24() {
         $this->assertSpec(
             'issue-24/Content',
