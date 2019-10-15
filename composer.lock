@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a497fe15849bb4b3928a263091c743c2",
+    "content-hash": "a15c50a6cf8502d6557934da65a7d0e3",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -65,6 +65,41 @@
                 "markdown-extra"
             ],
             "time": "2018-03-26T11:24:36+00:00"
+        },
+        {
+            "name": "kirra/markdown-task-lists",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kirra/markdown-task-lists.git",
+                "reference": "3f5f8e5abc56a6a57dcda430cd2a238df784d391"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kirra/markdown-task-lists/zipball/3f5f8e5abc56a6a57dcda430cd2a238df784d391",
+                "reference": "3f5f8e5abc56a6a57dcda430cd2a238df784d391",
+                "shasum": ""
+            },
+            "require": {
+                "cebe/markdown": "1.2.*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^7.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kirra\\Markdown\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Support Github's Task Lists in a cebe/markdown parser.",
+            "time": "2019-10-15T12:38:04+00:00"
         }
     ],
     "packages-dev": [

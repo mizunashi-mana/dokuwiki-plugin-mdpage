@@ -383,4 +383,32 @@ trait MarkdownRendererTrait {
 
         return $this->getRenderResult();
     }
+
+    // Kirra\Markdown\TaskListsTrait
+
+    protected function renderCheckbox($block) {
+        if (!in_array('list', $this->context, true)) {
+            $this->renderer->cdata($block['original']);
+
+            return $this->getRenderResult();
+        }
+
+        $format = $this->renderer->getFormat();
+        if ($format == 'xhtml') {
+            $input = '<input type="checkbox" onclick="return false;" ';
+            if ($block['checked']) {
+                $input .= 'checked';
+            }
+            $input .= '>';
+            $this->renderer->doc .= $input.' ';
+        } else {
+            if ($block['checked']) {
+                $this->renderer->cdata('[x] ');
+            } else {
+                $this->renderer->cdata('[ ] ');
+            }
+        }
+
+        return $this->getRenderResult();
+    }
 }
