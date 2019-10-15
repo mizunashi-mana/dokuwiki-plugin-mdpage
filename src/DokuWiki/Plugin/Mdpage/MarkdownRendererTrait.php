@@ -389,6 +389,7 @@ trait MarkdownRendererTrait {
     protected function renderCheckbox($block) {
         if (!in_array('list', $this->context, true)) {
             $this->renderer->cdata($block['original']);
+
             return $this->getRenderResult();
         }
 
@@ -399,7 +400,7 @@ trait MarkdownRendererTrait {
                 $input .= 'checked';
             }
             $input .= '>';
-            $this->renderer->doc .= $input . ' ';
+            $this->renderer->doc .= $input.' ';
         } else {
             if ($block['checked']) {
                 $this->renderer->cdata('[x] ');
