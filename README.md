@@ -12,6 +12,13 @@ See <https://www.dokuwiki.org/plugin:mdpage>.
 
 See [Contributing Guide](https://github.com/mizunashi-mana/dokuwiki-plugin-mdpage/blob/master/CONTRIBUTING.md).
 
+## Release flow
+
+1. Bump the date of `plugin.info.txt`
+2. Run `./scripts/push-release-tag.bash [VERSION]`
+3. Fix `lastupdate` on https://www.dokuwiki.org/plugin:mdpage
+4. Wait deploying and update the release note for new version
+
 ## License
 
 This work is dual-licensed under [the Apache 2.0 License](https://github.com/mizunashi-mana/dokuwiki-plugin-mdpage/blob/master/LICENSE.Apache-2.0) and [the GPL 2.0 (or any later version)](https://github.com/mizunashi-mana/dokuwiki-plugin-mdpage/blob/master/LICENSE.GPL-2.0-or-later).

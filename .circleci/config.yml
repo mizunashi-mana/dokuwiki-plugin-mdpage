@@ -84,7 +84,7 @@ jobs:
 
     deploy:
         docker:
-            - image: circleci/golang:1.8
+            - image: circleci/golang:1.13
         steps:
             - checkout
 
