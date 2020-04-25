@@ -2,10 +2,10 @@
 
 namespace DokuWiki\Test\Plugin\Mdpage;
 
-use DOMDocument;
-use DokuWikiTest;
 use Doku_Renderer_xhtml;
 use DokuWiki\Plugin\Mdpage\Markdown;
+use DokuWikiTest;
+use DOMDocument;
 
 class MarkdownSpecTest extends DokuWikiTest {
     protected $renderer;
@@ -70,6 +70,13 @@ class MarkdownSpecTest extends DokuWikiTest {
     public function testIssue40() {
         $this->assertSpec(
             'issue-40/Content',
+            $this->defaultFlavors
+        );
+    }
+
+    public function testIssue50() {
+        $this->assertSpec(
+            'issue-50/Content',
             $this->defaultFlavors
         );
     }
