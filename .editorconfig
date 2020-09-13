@@ -14,5 +14,7 @@ indent_style = tab
 [*.md]
 trim_trailing_whitespace = false
 
-[tests/specs/**/*.html]
+[tests/specs/**/*.{html,txt}]
+indent_style = tab
 trim_trailing_whitespace = false
+insert_final_newline = false

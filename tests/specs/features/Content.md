@@ -4,6 +4,10 @@
 
 simple paragraph: *emph*, **strong**, ~~strike~~ and `mono`.
 
+<summary>inline html
+<details>You need to enable <code>htmlok</code> on DokuWiki configuration.</details>
+</summary>
+
 > quote
 
 ```plain
