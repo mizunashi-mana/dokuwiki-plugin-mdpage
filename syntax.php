@@ -10,11 +10,11 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
     protected $dokuwikiVersion = null;
 
     private function getDokuWikiVersion() {
-        if ($this->$dokuwikiVersion == null) {
-            $this->$dokuwikiVersion = getVersionData()['date'];
+        if ($this->dokuwikiVersion == null) {
+            $this->dokuwikiVersion = getVersionData()['date'];
         }
 
-        return $this->$dokuwikiVersion;
+        return $this->dokuwikiVersion;
     }
 
     public function getType() {
@@ -82,7 +82,7 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
         }
 
         $context = [
-            'dokuwiki_version' => $this->$dokuwikiVersion,
+            'dokuwiki_version' => $this->dokuwikiVersion,
             'flavor' => $flavor,
         ];
 
