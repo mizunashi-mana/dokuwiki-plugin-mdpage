@@ -2,6 +2,7 @@
 
 namespace DokuWiki\Test\Plugin\Mdpage;
 
+use Doku_Renderer_metadata;
 use Doku_Renderer_xhtml;
 use DokuWiki\Plugin\Mdpage\Markdown;
 use DokuWikiTest;
@@ -88,23 +89,17 @@ class MarkdownSpecTest extends DokuWikiTest {
         );
     }
 
-    /**
-     * This plugin has fallback HTML rendering for PHP 7.2
-     * So, the results of rendering are different between PHP >= 7.2 and PHP < 7.2.
-     *
-     * Therefore, we test only HTML rendering do not throw exceptions.
-     */
-    public function testCanParseHtml() {
-        $markdown = <<<EOS
-<del>deleted</del>
-EOS;
+    public function testMetadata() {
+        $this->assertMetaSpec(
+            'metadata/Content',
+            [
+                Markdown::GITHUB_FLAVORED,
+            ]
+        );
+    }
 
-        foreach ($this->defaultFlavors as $flavor) {
-            $this->assertGreaterThan(
-                10,
-                strlen($this->renderMarkdownToXHTML($markdown, $flavor))
-            );
-        }
+    private function getDokuWikiVersion() {
+        return getVersionData()['date'];
     }
 
     private function renderMarkdownToXHTML($text, $flavor) {
@@ -113,14 +108,30 @@ EOS;
             'pos' => 0,
         ];
         $context = [
-            'dokuwiki_version' => substr(getVersionData()['date'], 0, 10), // XXXX-XX-XX
+            'dokuwiki_version' => $this->getDokuWikiVersion(),
             'flavor' => $flavor,
         ];
 
         $result = Markdown::parseWithRenderer($renderer, $text, $data, $context);
         $this->assertEquals($renderer->doc, $result);
 
-        return $renderer->doc;
+        return $result;
+    }
+
+    private function renderMarkdownToMetadata($text, $flavor) {
+        $renderer = new Doku_Renderer_metadata();
+        $data = [
+            'pos' => 0,
+        ];
+        $context = [
+            'dokuwiki_version' => $this->getDokuWikiVersion(),
+            'flavor' => $flavor,
+        ];
+
+        $result = Markdown::parseWithRenderer($renderer, $text, $data, $context);
+        $this->assertEquals($renderer->doc, $result);
+
+        return $result;
     }
 
     private function assertXHTML($target_md, $expected_xhtml, $flavor) {
@@ -137,6 +148,18 @@ EOS;
         );
     }
 
+    private function assertMetadata($target_md, $expected_metadata, $flavor) {
+        $expected = $expected_metadata;
+
+        $actual = $this->renderMarkdownToMetadata($target_md, $flavor);
+
+        $this->assertEquals(
+            $expected,
+            $actual,
+            'Failed asserting markdown and Metadata for '.$flavor
+        );
+    }
+
     private function assertSpec($basename, $flavors) {
         $basepath = $this->specsDirPath.'/'.$basename;
 
@@ -144,6 +167,16 @@ EOS;
         foreach ($flavors as $flavor) {
             $content_xhtml = file_get_contents($basepath.'_'.$flavor.'.html');
             $this->assertXHTML($content_md, $content_xhtml, $flavor);
+        }
+    }
+
+    private function assertMetaSpec($basename, $flavors) {
+        $basepath = $this->specsDirPath.'/'.$basename;
+
+        $content_md = file_get_contents($basepath.'.md');
+        foreach ($flavors as $flavor) {
+            $content_xhtml = file_get_contents($basepath.'_'.$flavor.'.meta.txt');
+            $this->assertMetadata($content_md, $content_xhtml, $flavor);
         }
     }
 }

@@ -117,7 +117,8 @@ trait MarkdownRendererTrait {
     // See https://github.com/splitbrain/dokuwiki/issues/2563
     // We should fallback for DokuWiki 2018-04-22a to avoid `Function create_function() is deprecated`
     private function isGeshiFallbackVersion() {
-        return phpversion() >= '7.2' && $this->getDokuWikiVersion() == '2018-04-22';
+        return phpversion() >= '7.2'
+            && substr($this->getDokuWikiVersion(), 0, 10) == '2018-04-22';
     }
 
     protected function renderHtml($block) {
