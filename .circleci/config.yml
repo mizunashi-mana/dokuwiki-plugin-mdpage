@@ -77,11 +77,10 @@ jobs:
                 sleep 10
 
             - run: |
-                docker cp . $(docker-compose ps -q):/bitnami/dokuwiki/lib/plugins/mdpage
-                docker cp assets/sample-page.txt $(docker-compose ps -q):/bitnami/dokuwiki/data/pages/start.txt
+                ./scripts/copy-to-docker-volume.bash
 
             - run: |
-                curl -v http://localhost:8080/start | \
+                curl -v http://localhost:8080/doku.php?start | \
                     grep 'simple paragraph: <em>emph</em>, <strong>strong</strong> and <code>mono</code>.'
 
             - run: docker-compose down

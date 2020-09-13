@@ -3,11 +3,6 @@ version: '3'
 services:
   dokuwiki:
     image: bitnami/dokuwiki:20200729
+    #image: bitnami/dokuwiki:20180422
     ports:
         - "8080:8080"
-    volumes:
-        - "dokuwiki_data:/bitnami/dokuwiki"
-
-volumes:
-    dokuwiki_data:
-        driver: local
