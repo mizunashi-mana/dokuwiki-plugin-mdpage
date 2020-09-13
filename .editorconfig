@@ -13,3 +13,6 @@ indent_style = tab
 
 [*.md]
 trim_trailing_whitespace = false
+
+[tests/specs/**/*.html]
+trim_trailing_whitespace = false
