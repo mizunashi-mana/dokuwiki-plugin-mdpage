@@ -34,20 +34,33 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
     }
 
     public function connectTo($mode) {
-        $this->Lexer->addEntryPattern('<markdown>(?=.*</markdown>)', $mode, 'plugin_' . $this->getPluginName());
+        if ($this->getConf('markdown_default')) {
+            $this->Lexer->addEntryPattern('\\A.', $mode, 'plugin_' . $this->getPluginName());
+        } else {
+            $this->Lexer->addEntryPattern('<markdown>(?=.*</markdown>)', $mode, 'plugin_' . $this->getPluginName());
+        }
     }
 
     public function postConnect() {
-        $this->Lexer->addExitPattern('</markdown>', 'plugin_' . $this->getPluginName());
+        if ($this->getConf('markdown_default')) {
+            $this->Lexer->addExitPattern('\\z', 'plugin_' . $this->getPluginName());
+        } else {
+            $this->Lexer->addExitPattern('</markdown>', 'plugin_' . $this->getPluginName());
+        }
     }
 
     public function handle($match, $state, $pos, Doku_Handler $handler) {
         switch ($state) {
             case DOKU_LEXER_UNMATCHED:
+                $new_pos = $pos;
+                if (!$this->getConf('markdown_default')) {
+                    $new_pos = $new_pos - strlen('<markdown>');
+                }
+
                 return [
                     'render' => true,
                     'match' => $match,
-                    'pos' => $pos - strlen('<markdown>'),
+                    'pos' => $new_pos,
                 ];
             default:
                 return [
