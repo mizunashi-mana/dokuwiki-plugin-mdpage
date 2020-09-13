@@ -3,7 +3,7 @@ version: 2
 jobs:
     build:
         docker:
-            - image: circleci/php:7.1-node-browsers
+            - image: circleci/php:7.3-node-browsers
         steps:
             - checkout
 
@@ -20,7 +20,7 @@ jobs:
 
     test:
         docker:
-            - image: circleci/php:7.1-node-browsers
+            - image: circleci/php:7.3-node-browsers
         steps:
             - checkout
 
@@ -75,6 +75,10 @@ jobs:
             - run: |
                 docker-compose up -d
                 sleep 10
+
+            - run: |
+                docker cp . $(docker-compose ps -q):/bitnami/dokuwiki/lib/plugins/mdpage
+                docker cp assets/sample-page.txt $(docker-compose ps -q):/bitnami/dokuwiki/data/pages/start.txt
 
             - run: |
                 curl -v http://localhost:8080/start | \

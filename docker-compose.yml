@@ -2,12 +2,12 @@ version: '3'
 
 services:
   dokuwiki:
-    image: mizunashi/dokuwiki:latest
+    image: bitnami/dokuwiki:20200729
     ports:
-        - "8080:80"
+        - "8080:8080"
     volumes:
-        - ".:/var/www/dokuwiki/lib/plugins/mdpage"
-        - "./assets/sample-page.txt:/var/www/dokuwiki/data/pages/start.txt"
-    environment:
-        #- DEBUG=true
-        - DOKUWIKI_LANG=ja
+        - "dokuwiki_data:/bitnami/dokuwiki"
+
+volumes:
+    dokuwiki_data:
+        driver: local
