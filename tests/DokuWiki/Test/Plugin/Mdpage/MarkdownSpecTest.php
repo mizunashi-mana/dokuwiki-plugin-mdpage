@@ -2,8 +2,8 @@
 
 namespace DokuWiki\Test\Plugin\Mdpage;
 
-use Doku_Renderer_xhtml;
 use Doku_Renderer_metadata;
+use Doku_Renderer_xhtml;
 use DokuWiki\Plugin\Mdpage\Markdown;
 use DokuWikiTest;
 use DOMDocument;
