@@ -10,18 +10,18 @@ class Markdown {
     public static function parseWithRenderer(
         $renderer,
         $content,
-        $flavor,
+        $data,
         $context
     ) {
-        switch ($flavor) {
+        switch ($context['flavor']) {
             case self::GITHUB_FLAVORED:
-                $parser = new Markdown\GitHubFlavored($renderer, $context);
+                $parser = new Markdown\GitHubFlavored($renderer, $data, $context);
                 break;
             case self::MARKDOWN_EXTRA:
-                $parser = new Markdown\MarkdownExtra($renderer, $context);
+                $parser = new Markdown\MarkdownExtra($renderer, $data, $context);
                 break;
             default:
-                $parser = new Markdown\Traditional($renderer, $context);
+                $parser = new Markdown\Traditional($renderer, $data, $context);
                 break;
         }
 
