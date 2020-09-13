@@ -12,3 +12,6 @@ $meta['flavor'] = [
         'markdown-extra',
     ],
 ];
+$meta['markdown_default'] = [
+    'onoff',
+];
