@@ -39,6 +39,13 @@ class MarkdownSpecTest extends DokuWikiTest {
         );
     }
 
+    public function testWithoutHtmlok() {
+        $this->assertSpec(
+            'without-htmlok/Content',
+            $this->defaultFlavors
+        );
+    }
+
     public function testDokuwikiInternal() {
         $this->assertSpec(
             'dokuwiki-internal/Content',
@@ -105,8 +112,12 @@ EOS;
         $data = [
             'pos' => 0,
         ];
+        $context = [
+            'dokuwiki_version' => substr(getVersionData()['date'], 0, 10), // XXXX-XX-XX
+            'flavor' => $flavor,
+        ];
 
-        $result = Markdown::parseWithRenderer($renderer, $text, $flavor, $data);
+        $result = Markdown::parseWithRenderer($renderer, $text, $data, $context);
         $this->assertEquals($renderer->doc, $result);
 
         return $renderer->doc;

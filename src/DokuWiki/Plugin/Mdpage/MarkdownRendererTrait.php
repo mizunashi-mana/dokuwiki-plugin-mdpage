@@ -7,6 +7,8 @@ trait MarkdownRendererTrait {
     private $renderPos = 0;
     private $listLevel = 0;
 
+    abstract protected function getDokuWikiVersion();
+
     abstract protected function renderAbsy($blocks);
 
     abstract protected function parse($content);
@@ -110,6 +112,14 @@ trait MarkdownRendererTrait {
         return false;
     }
 
+    // Note: Fallback html rendering for DokuWiki 2018-04-22a
+    //
+    // See https://github.com/splitbrain/dokuwiki/issues/2563
+    // We should fallback for DokuWiki 2018-04-22a to avoid `Function create_function() is deprecated`
+    private function isGeshiFallbackVersion() {
+        return phpversion() >= '7.2' && $this->getDokuWikiVersion() == '2018-04-22';
+    }
+
     protected function renderHtml($block) {
         $content = $block['content']."\n";
 
@@ -117,12 +127,8 @@ trait MarkdownRendererTrait {
             return '';
         }
 
-        // Note: Fallback html rendering for DokuWiki 2018-04-22a
-        //
-        // See https://github.com/splitbrain/dokuwiki/issues/2563
-        // We should fallback for DokuWiki 2018-04-22a to avoid `Function create_function() is deprecated`
         global $conf;
-        if (phpversion() >= '7.2' && !$conf['htmlok']) {
+        if ($this->isGeshiFallbackVersion() && !$conf['htmlok']) {
             $this->renderer->monospace_open();
             $this->renderer->cdata($content);
             $this->renderer->monospace_close();
@@ -140,9 +146,8 @@ trait MarkdownRendererTrait {
             return '';
         }
 
-        // See the note: Fallback html rendering for DokuWiki 2018-04-22a
         global $conf;
-        if (phpversion() >= '7.2' && !$conf['htmlok']) {
+        if ($this->isGeshiFallbackVersion() && !$conf['htmlok']) {
             $this->renderer->monospace_open();
             $this->renderer->cdata($content);
             $this->renderer->monospace_close();

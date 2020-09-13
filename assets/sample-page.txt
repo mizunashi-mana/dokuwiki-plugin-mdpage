@@ -5,7 +5,9 @@
 
 simple paragraph: *emph*, **strong** and `mono`.
 
-<p>inline html s</p>
+<summary>inline html
+<details>You need to enable <code>htmlok</code> on DokuWiki configuration.</details>
+</summary>
 
 > quote
 

@@ -7,6 +7,15 @@ require_once __DIR__.'/src/bootstrap.php';
 use DokuWiki\Plugin\Mdpage\Markdown;
 
 class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
+    protected $dokuwikiVersion = null;
+
+    private function getDokuWikiVersion() {
+        if ($this->$dokuwikiVersion == null) {
+            $this->$dokuwikiVersion = getVersionData()['date'];
+        }
+
+        return $this->$dokuwikiVersion;
+    }
 
     public function getType() {
         return 'protected';
@@ -72,7 +81,12 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
                 break;
         }
 
-        $result = Markdown::parseWithRenderer($renderer, $match, $flavor, $data);
+        $context = [
+            'dokuwiki_version' => $this->$dokuwikiVersion,
+            'flavor' => $flavor,
+        ];
+
+        $result = Markdown::parseWithRenderer($renderer, $match, $data, $context);
         /*echo '<pre>';
         var_dump($match);
         var_dump(htmlspecialchars($result));
