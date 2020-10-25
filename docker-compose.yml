@@ -6,3 +6,4 @@ services:
     #image: bitnami/dokuwiki:20180422
     ports:
         - "8080:8080"
+    # user/pass = user/bitnami1
