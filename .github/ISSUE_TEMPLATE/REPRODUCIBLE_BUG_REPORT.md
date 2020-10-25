@@ -20,5 +20,9 @@ Please note we will close your issue without comment if you delete, do not read 
 | OS | |
 | Web Server | |
 
+Expect behavior:
+
+Actual behavior:
+
 Details:
 
