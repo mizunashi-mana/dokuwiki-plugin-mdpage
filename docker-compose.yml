@@ -4,6 +4,9 @@ services:
   dokuwiki:
     image: bitnami/dokuwiki:20200729
     #image: bitnami/dokuwiki:20180422
+    environment:
+        DOKUWIKI_USERNAME: 'superuser'
+        DOKUWIKI_PASSWORD: 'bitnami1'
     ports:
         - "8080:8080"
     # user/pass = user/bitnami1
