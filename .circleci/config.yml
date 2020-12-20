@@ -55,7 +55,7 @@ jobs:
 
             - run: |
                 ./cc-test-reporter before-build
-                composer test -- --coverage-clover clover.xml
+                phpdbg -qrr ./bin/phpunit --coverage-clover clover.xml
                 ./cc-test-reporter after-build --exit-code $? \
                     --coverage-input-type clover
 
