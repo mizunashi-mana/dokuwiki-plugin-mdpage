@@ -33,19 +33,28 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
         return $this->getInfo()['base'];
     }
 
+    public function getPluginMode() {
+        return 'plugin_' . $this->getPluginName();
+    }
+
     public function connectTo($mode) {
         if ($this->getConf('markdown_default')) {
-            $this->Lexer->addEntryPattern('\\A.', $mode, 'plugin_' . $this->getPluginName());
+            $this->Lexer->addEntryPattern('\\A(?!.*</script>).', $mode, $this->getPluginMode());
+            $this->Lexer->addEntryPattern('<!DOCTYPE markdown>', $mode, $this->getPluginMode());
+            $this->Lexer->addEntryPattern('</script>', $mode, $this->getPluginMode());
         } else {
-            $this->Lexer->addEntryPattern('<markdown>(?=.*</markdown>)', $mode, 'plugin_' . $this->getPluginName());
+            $this->Lexer->addEntryPattern('<markdown>(?=.*</markdown>)', $mode, $this->getPluginMode());
         }
     }
 
     public function postConnect() {
+        $pluginBaseMode = 'plugin_' . $this->getPluginName();
+
         if ($this->getConf('markdown_default')) {
-            $this->Lexer->addExitPattern('\\z', 'plugin_' . $this->getPluginName());
+            $this->Lexer->addExitPattern('\\z', $this->getPluginMode());
+            $this->Lexer->addExitPattern('<script type="text/x-dokuwiki">', $this->getPluginMode());
         } else {
-            $this->Lexer->addExitPattern('</markdown>', 'plugin_' . $this->getPluginName());
+            $this->Lexer->addExitPattern('</markdown>', $pluginBaseMode);
         }
     }
 
@@ -53,7 +62,13 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
         switch ($state) {
             case DOKU_LEXER_UNMATCHED:
                 $new_pos = $pos;
-                if (!$this->getConf('markdown_default')) {
+                if ($this->getConf('markdown_default')) {
+                    if (preg_match('|^</script>|', $match)) {
+                        $new_pos = $new_pos - strlen('</script>');
+                    } else if (preg_match('|^<!DOCTYPE markdown>|', $match)) {
+                        $new_pos = $new_pos - strlen('<!DOCTYPE markdown>');
+                    }
+                } else {
                     $new_pos = $new_pos - strlen('<markdown>');
                 }
 
@@ -100,10 +115,12 @@ class syntax_plugin_mdpage extends DokuWiki_Syntax_Plugin {
         ];
 
         $result = Markdown::parseWithRenderer($renderer, $match, $data, $context);
-        /*echo '<pre>';
-        var_dump($match);
+        /*
+        echo '<pre>';
+        var_dump(htmlspecialchars($match));
         var_dump(htmlspecialchars($result));
-        echo '</pre>';*/
+        echo '</pre>';
+        */
 
         return true;
     }
