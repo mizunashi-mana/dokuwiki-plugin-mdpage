@@ -322,7 +322,7 @@ trait MarkdownRendererTrait {
     }
 
     /**
-     * Note "Avoid License Conflicting for Links with Titles":
+     * Note: Avoid License Conflicting for Links with Titles
      *
      * DokuWiki is not supported links with titles, but Markdown is supported it.
      * We decided not to support links with titles before 2.1.0. However, since
@@ -427,7 +427,7 @@ trait MarkdownRendererTrait {
     }
 
     /**
-     * Ref: https://github.com/splitbrain/dokuwiki/blob/release_stable_2020-07-29/inc/parser/xhtml.php#L1601
+     * Ref: https://github.com/splitbrain/dokuwiki/blob/release_stable_2020-07-29/inc/parser/xhtml.php#L1601.
      */
     private function replaceDokuWikiLinkTitle($linkContent, $title) {
         $replacedTitle = strtr(
@@ -438,9 +438,10 @@ trait MarkdownRendererTrait {
                 '"' => '%22',
             ]
         );
+
         return preg_replace(
             '/<a href=([^>]*) title="([^"]*)"([^>]*)>/',
-            '<a href=$1 title="' . $replacedTitle . '"$3>',
+            '<a href=$1 title="'.$replacedTitle.'"$3>',
             $linkContent
         );
     }
