@@ -17,5 +17,6 @@ return PhpCsFixer\Config::create()
         'braces' => [
             'position_after_functions_and_oop_constructs' => 'same',
         ],
+        'phpdoc_summary' => false,
     ])
     ;

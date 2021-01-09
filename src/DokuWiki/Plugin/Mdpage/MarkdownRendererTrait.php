@@ -321,6 +321,21 @@ trait MarkdownRendererTrait {
         return false;
     }
 
+    /**
+     * Note: Avoid License Conflicting for Links with Titles
+     *
+     * DokuWiki is not supported links with titles, but Markdown is supported it.
+     * We decided not to support links with titles before 2.1.0. However, since
+     * many users voting the feature, we support it from 2.2.0.
+     *
+     * The simple way to support links with titles is copying methods from DokuWiki
+     * and modifying. However, DokuWiki is licensed under the GPL-2.0-or-later and
+     * this plugin is licensed under the Apache-2.0 OR GPL-2.0-or-later. So, we cannot
+     * use parts of DokuWiki's source codes. Therefore, we use dangerous operations to
+     * support links with titles for user needs. Be careful for this feature.
+     *
+     * Ref: https://github.com/mizunashi-mana/dokuwiki-plugin-mdpage/issues/35
+     */
     protected function renderLink($block) {
         $escapedPos = $this->renderPos;
 
@@ -331,23 +346,104 @@ trait MarkdownRendererTrait {
         // See https://github.com/splitbrain/dokuwiki/blob/cbaf278c50e5baf946b3bd606c369735fe0953be/inc/parser/handler.php#L527
         $url = $block['url'];
         $text = $this->collectText($block['text']);
+        $title = $block['title'];
 
         if (link_isinterwiki($url)) {
             // Interwiki
             $interwiki = explode('>', $url, 2);
-            $this->renderer->interwikilink($url, $text, strtolower($interwiki[0]), $interwiki[1]);
+            $this->renderDokuWikiInterwikiLink($url, $text, strtolower($interwiki[0]), $interwiki[1], $title);
         } elseif (preg_match('#^([a-z0-9\-\.+]+?)://#i', $url)) {
             // external link (accepts all protocols)
-            $this->renderer->externallink($url, $text);
+            $this->renderDokuWikiExternalLink($url, $text, $title);
         } elseif (preg_match('!^#.+!', $url)) {
             // local link
-            $this->renderer->locallink(substr($url, 1), $text);
+            $this->renderDokuWikiLocalLink(substr($url, 1), $text, $title);
         } else {
             // internal link
-            $this->renderer->internallink($url, $text);
+            $this->renderDokuWikiInternalLink($url, $text, $title);
         }
 
         return $this->getRenderResult($escapedPos);
+    }
+
+    private function renderDokuWikiInterwikiLink($match, $name, $wikiName, $wikiUri, $title = null) {
+        $escapedPos = $this->renderPos;
+
+        $this->renderer->interwikilink($match, $name, $wikiName, $wikiUri);
+
+        if ($title === null) {
+            return;
+        }
+
+        // See the note "Avoid License Conflicting for Links with Titles"
+        $renderedContent = substr($this->renderer->doc, $escapedPos);
+        $replacedContent = $this->replaceDokuWikiLinkTitle($renderedContent, $title);
+        $this->renderer->doc = substr_replace($this->renderer->doc, $replacedContent, $escapedPos);
+    }
+
+    private function renderDokuWikiExternalLink($url, $name, $title = null) {
+        $escapedPos = $this->renderPos;
+
+        $this->renderer->externallink($url, $name);
+
+        if ($title === null) {
+            return;
+        }
+
+        // See the note "Avoid License Conflicting for Links with Titles"
+        $renderedContent = substr($this->renderer->doc, $escapedPos);
+        $replacedContent = $this->replaceDokuWikiLinkTitle($renderedContent, $title);
+        $this->renderer->doc = substr_replace($this->renderer->doc, $replacedContent, $escapedPos);
+    }
+
+    private function renderDokuWikiLocalLink($hash, $name, $title = null) {
+        $escapedPos = $this->renderPos;
+
+        $this->renderer->locallink($hash, $name);
+
+        if ($title === null) {
+            return;
+        }
+
+        // See the note "Avoid License Conflicting for Links with Titles"
+        $renderedContent = substr($this->renderer->doc, $escapedPos);
+        $replacedContent = $this->replaceDokuWikiLinkTitle($renderedContent, $title);
+        $this->renderer->doc = substr_replace($this->renderer->doc, $replacedContent, $escapedPos);
+    }
+
+    private function renderDokuWikiInternalLink($id, $name, $title = null) {
+        $escapedPos = $this->renderPos;
+
+        $this->renderer->internallink($id, $name);
+
+        if ($title === null) {
+            return;
+        }
+
+        // See the note "Avoid License Conflicting for Links with Titles"
+        $renderedContent = substr($this->renderer->doc, $escapedPos);
+        $replacedContent = $this->replaceDokuWikiLinkTitle($renderedContent, $title);
+        $this->renderer->doc = substr_replace($this->renderer->doc, $replacedContent, $escapedPos);
+    }
+
+    /**
+     * Ref: https://github.com/splitbrain/dokuwiki/blob/release_stable_2020-07-29/inc/parser/xhtml.php#L1601.
+     */
+    private function replaceDokuWikiLinkTitle($linkContent, $title) {
+        $replacedTitle = strtr(
+            htmlspecialchars($title),
+            [
+                '>' => '%3E',
+                '<' => '%3C',
+                '"' => '%22',
+            ]
+        );
+
+        return preg_replace(
+            '/<a href=([^>]*) title="([^"]*)"([^>]*)>/',
+            '<a href=$1 title="'.$replacedTitle.'"$3>',
+            $linkContent
+        );
     }
 
     protected function renderImage($block) {
